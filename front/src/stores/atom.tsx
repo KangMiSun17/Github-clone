@@ -29,4 +29,11 @@ export const sortState = atom<string>({
 export const repositoriesState = atom<RepoType[]>({
   key: "repositoriesState",
   default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const searchWordState = atom<string>({
+  key: "searchWordState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
 });

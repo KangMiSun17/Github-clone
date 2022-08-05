@@ -8,12 +8,15 @@ import {
   menuValueState,
   pageState,
   repositoriesState,
+  searchWordState,
   sortState,
 } from "../../stores/atom";
 import { Content } from "../../styles/menu";
-import { RepoList } from "../../styles/repositories";
+import { FlexBox, RepoList } from "../../styles/repositories";
 import FilterText from "./FilterText";
 import { RepoType } from "../../types/repo";
+import Search from "./Search";
+import { useNavigate } from "react-router-dom";
 
 function Repositories() {
   const [repos, setRepos] = useRecoilState(repositoriesState);
@@ -22,10 +25,23 @@ function Repositories() {
   const setValue = useSetRecoilState(menuValueState);
   const sort = useRecoilValue(sortState);
   const language = useRecoilValue(languageState);
+  const searchWord = useRecoilValue(searchWordState);
 
   const getRepos = useCallback(() => {
     try {
-      if (language !== "All" && language) {
+      if (searchWord === "" && (!language || language === "All")) {
+        fetch(`https://api.github.com/orgs/facebook/repos?sort=${sort}&per_page=10&page=${page}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error();
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setRepos(data);
+          });
+      }
+      if (searchWord || (language && language !== "All")) {
         fetch(`https://api.github.com/orgs/facebook/repos?sort=${sort}`)
           .then((response) => {
             if (!response.ok) {
@@ -34,21 +50,24 @@ function Repositories() {
             return response.json();
           })
           .then((data) => {
-            const filterResult = data.filter((repo: RepoType) => repo.language === language);
-            setRepos(filterResult);
+            setRepos(data);
+            if (language && language !== "All") {
+              const filterResult = data.filter((repo: RepoType) => repo.language === language);
+              setRepos(filterResult);
+              console.log("언어 필터!");
+            }
+            if (searchWord !== "") {
+              console.log("검색어 필터!");
+              setRepos((prev) =>
+                prev.filter((repo: RepoType) =>
+                  repo.name.toLowerCase().includes(searchWord.toLowerCase())
+                )
+              );
+            }
           });
+
         return;
       }
-      fetch(`https://api.github.com/orgs/facebook/repos?sort=${sort}&per_page=10&page=${page}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error();
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setRepos(data);
-        });
     } catch (error: any) {
       setError(true);
     }
@@ -73,7 +92,10 @@ function Repositories() {
 
   return (
     <Content>
-      <SelectMenu />
+      <FlexBox>
+        <Search />
+        <SelectMenu />
+      </FlexBox>
       <FilterText repos={repos} />
       <RepoList>
         {repos?.map((repo, index) => (
