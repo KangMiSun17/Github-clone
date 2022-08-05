@@ -5,12 +5,15 @@ import {
   EachRepo,
   FlexBox,
   RepoDescription,
+  RepoLanguageColor,
   RepoOption,
   RepoTitle,
   RepoTopic,
   RepoTopics,
   RepoVisibility,
 } from "../../styles/repositories";
+import { useEffect } from "react";
+import colorData from "../../constants/colors.json";
 
 // last update date calculation function
 const calculateDate = (time: string) => {
@@ -42,6 +45,19 @@ const capitalization = (str: string) => {
 };
 
 function Repo({ repo }: { repo: RepoType }) {
+  const getColor = (obj: any, key: string): string => {
+    if (obj[key] === undefined) {
+      return "black";
+    }
+    return obj[key];
+  };
+
+  const languageColor = getColor(colorData, repo.language);
+
+  useEffect(() => {
+    getColor(colorData, repo.language);
+  }, []);
+
   return (
     <EachRepo>
       <FlexBox>
@@ -57,7 +73,9 @@ function Repo({ repo }: { repo: RepoType }) {
         ))}
       </RepoTopics>
       <FlexBox>
+        <RepoLanguageColor languageColor={languageColor} />
         <RepoOption>{repo.language}</RepoOption>
+
         <RepoOption>
           <StarBorderIcon />
           {repo.stargazers_count.toLocaleString()}

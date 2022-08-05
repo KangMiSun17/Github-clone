@@ -57,6 +57,14 @@ export const EachRepo = styled("div")(() => ({
   margin: "1.2rem 0.5rem",
 }));
 
+export const RepoLanguageColor = styled("span")(({ languageColor }: { languageColor: string }) => ({
+  width: 10,
+  height: 10,
+  borderRadius: "100%",
+  backgroundColor: languageColor,
+  marginRight: 5,
+}));
+
 export const RepoTitle = styled(Link)(() => ({
   fontSize: 20,
   marginRight: 8,
@@ -97,6 +105,7 @@ export const RepoTopic = styled("span")(() => ({
 }));
 
 export const RepoOption = styled(FlexBox)(() => ({
+  margin: 0,
   marginRight: 12,
   fontSize: 12,
   color: "#57606a",
