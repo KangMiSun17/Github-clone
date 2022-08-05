@@ -4,14 +4,16 @@ import { RepoType } from "../types/repo";
 
 const { persistAtom } = recoilPersist();
 
-export const pageState = atom<number>({
+export const repoPageState = atom<number>({
   key: "pageState",
   default: 1,
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const menuValueState = atom<number>({
   key: "menuValueState",
   default: 0,
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const languageState = atom<string>({
@@ -29,7 +31,6 @@ export const sortState = atom<string>({
 export const repositoriesState = atom<RepoType[]>({
   key: "repositoriesState",
   default: [],
-  effects_UNSTABLE: [persistAtom],
 });
 
 export const searchWordState = atom<string>({

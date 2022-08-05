@@ -1,15 +1,17 @@
-import { SetStateAction, useEffect } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { languageState, repositoriesState, searchWordState, sortState } from "../../stores/atom";
 import { SearchBox, SearchInput } from "../../styles/repositories";
 import { RepoType } from "../../types/repo";
 import SearchIcon from "@mui/icons-material/Search";
+import ErrorPage from "../../components/ErrorPage";
 
 function Search() {
   const [searchWord, setSearchWord] = useRecoilState(searchWordState);
   const setRepos = useSetRecoilState(repositoriesState);
   const language = useRecoilValue(languageState);
   const sort = useRecoilValue(sortState);
+  const [error, setError] = useState(false);
 
   const changeInputValue = (e: { target: { value: SetStateAction<string> } }) => {
     setSearchWord(e.target.value);
@@ -39,7 +41,7 @@ function Search() {
           }
         });
     } catch (error: any) {
-      console.log(error.message);
+      setError(true);
     }
   };
 
@@ -52,6 +54,10 @@ function Search() {
       return () => clearTimeout(getResult);
     }
   }, [searchWord]);
+
+  if (error) {
+    return <ErrorPage />;
+  }
 
   return (
     <SearchBox onSubmit={(e) => e.preventDefault()}>

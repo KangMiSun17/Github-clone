@@ -1,10 +1,18 @@
-import { Link } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import { RepoType } from "../../types/repo";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { Month } from "../../constants/month";
-import { FlexBox } from "../../styles/repositories";
+import {
+  EachRepo,
+  FlexBox,
+  RepoDescription,
+  RepoOption,
+  RepoTitle,
+  RepoTopic,
+  RepoTopics,
+  RepoVisibility,
+} from "../../styles/repositories";
 
+// last update date calculation function
 const calculateDate = (time: string) => {
   const today = new Date();
   const updateDate = new Date(time);
@@ -22,16 +30,18 @@ const calculateDate = (time: string) => {
 
   const betweenTimeDay = Math.floor(betweenTimeMinutes / 60 / 24);
   if (betweenTimeDay < 32) return `${betweenTimeDay} day  ago`;
+  //return on Day Month
   return `on ${upDateDay + " " + Month[upDateMonth + 1]}`;
 };
 
-function Repo({ repo }: { repo: RepoType }) {
-  const capitalization = (str: string) => {
-    const visibilityFirstChar = str[0].toUpperCase();
-    const visibilityLeftChar = str.slice(1, str.length);
-    return visibilityFirstChar + visibilityLeftChar;
-  };
+// visibility capitalization function
+const capitalization = (str: string) => {
+  const visibilityFirstChar = str[0].toUpperCase();
+  const visibilityLeftChar = str.slice(1, str.length);
+  return visibilityFirstChar + visibilityLeftChar;
+};
 
+function Repo({ repo }: { repo: RepoType }) {
   return (
     <EachRepo>
       <FlexBox>
@@ -59,52 +69,3 @@ function Repo({ repo }: { repo: RepoType }) {
 }
 
 export default Repo;
-
-const EachRepo = styled("div")(() => ({
-  margin: "1.2rem 0.5rem",
-}));
-
-const RepoTitle = styled(Link)(() => ({
-  fontSize: 20,
-  marginRight: 8,
-  fontWeight: "bolder",
-}));
-
-const RepoVisibility = styled("span")(() => ({
-  display: "flex",
-  alignItems: "center",
-  height: 20,
-  fontSize: 12,
-  fontWeight: "500",
-  color: "#57606a",
-  padding: "0 0.6rem",
-  border: "1px solid gray",
-  borderRadius: 20,
-}));
-
-const RepoDescription = styled("div")(() => ({
-  marginTop: "0.5rem",
-  color: "#57606a",
-}));
-
-const RepoTopics = styled("div")(() => ({
-  display: "flex",
-  flexWrap: "wrap",
-}));
-
-const RepoTopic = styled("span")(() => ({
-  fontSize: 12,
-  fontWeight: "500",
-  backgroundColor: "#ddf4ff",
-  color: "#0969da",
-  margin: 5,
-  marginLeft: 0,
-  padding: "0.3rem 0.8rem",
-  borderRadius: 20,
-}));
-
-const RepoOption = styled(FlexBox)(() => ({
-  marginRight: 12,
-  fontSize: 12,
-  color: "#57606a",
-}));

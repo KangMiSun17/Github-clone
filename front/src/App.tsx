@@ -1,6 +1,6 @@
 import React from "react";
 import Menu from "./components/Menu";
-import { styled } from "@mui/material/styles";
+import { Title } from "./styles/menu";
 
 function App() {
   return (
@@ -15,8 +15,3 @@ function App() {
 }
 
 export default App;
-
-const Title = styled("h1")(() => ({
-  display: "flex",
-  alignItems: "center",
-}));

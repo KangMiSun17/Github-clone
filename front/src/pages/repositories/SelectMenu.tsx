@@ -2,14 +2,14 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { languageState, pageState, sortState } from "../../stores/atom";
+import { languageState, repoPageState, sortState } from "../../stores/atom";
 import { InputLabel } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function SelectMenu() {
   const [language, setLanguage] = useRecoilState(languageState);
   const [sort, setSort] = useRecoilState(sortState);
-  const setPage = useSetRecoilState(pageState);
+  const setPage = useSetRecoilState(repoPageState);
   const navigate = useNavigate();
 
   const changeSort = (event: SelectChangeEvent) => {
@@ -26,7 +26,7 @@ function SelectMenu() {
 
   return (
     <>
-      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+      <FormControl sx={{ mr: 1, minWidth: 120 }} size="small">
         <InputLabel id="demo-select-small">Language</InputLabel>
         <Select
           value={language}
@@ -43,7 +43,7 @@ function SelectMenu() {
           <MenuItem value="Java">Java</MenuItem>
         </Select>
       </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+      <FormControl sx={{ m: 1, ml: 0, minWidth: 120 }} size="small">
         <InputLabel id="demo-select-small">Sort</InputLabel>
         <Select value={sort} onChange={changeSort} label="Sort">
           <MenuItem value="updated">최신 업데이트순</MenuItem>
