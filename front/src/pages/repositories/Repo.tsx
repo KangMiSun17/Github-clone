@@ -54,10 +54,6 @@ function Repo({ repo }: { repo: RepoType }) {
 
   const languageColor = getColor(colorData, repo.language);
 
-  // useEffect(() => {
-  //   getColor(colorData, repo.language);
-  // }, []);
-
   return (
     <EachRepo>
       <FlexBox>
