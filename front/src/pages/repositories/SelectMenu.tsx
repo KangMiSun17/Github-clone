@@ -28,15 +28,8 @@ function SelectMenu() {
     <>
       <FormControl sx={{ mr: 1, minWidth: 120 }} size="small">
         <InputLabel id="demo-select-small">Language</InputLabel>
-        <Select
-          value={language}
-          onChange={changeLanguage}
-          label="Language"
-          inputProps={{ "aria-label": "Without label" }}
-        >
-          <MenuItem value="All">
-            <em>All</em>
-          </MenuItem>
+        <Select value={language} onChange={changeLanguage} label="Language">
+          <MenuItem value="All">All</MenuItem>
           <MenuItem value="C++">C++</MenuItem>
           <MenuItem value="JavaScript">JavaScript</MenuItem>
           <MenuItem value="TypeScript">TypeScript</MenuItem>

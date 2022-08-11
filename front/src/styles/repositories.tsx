@@ -7,10 +7,6 @@ export const RepoList = styled(List)(() => ({
   padding: 18,
 }));
 
-export const BoldText = styled("span")(() => ({
-  fontWeight: "bold",
-}));
-
 export const ClearButton = styled("button")(() => ({
   all: "unset",
   display: "flex",
@@ -111,7 +107,7 @@ export const RepoOption = styled(FlexBox)(() => ({
   color: "#57606a",
 }));
 
-export const MovePage = styled("div")(() => ({
+export const MovePage = styled("section")(() => ({
   display: "flex",
   justifyContent: "center",
   margin: "1rem 0",

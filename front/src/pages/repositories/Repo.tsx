@@ -1,6 +1,6 @@
 import { RepoType } from "../../types/repo";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
-import { Month } from "../../constants/month";
+import { monthData } from "../../constants/month";
 import {
   EachRepo,
   FlexBox,
@@ -12,7 +12,6 @@ import {
   RepoTopics,
   RepoVisibility,
 } from "../../styles/repositories";
-import { useEffect } from "react";
 import colorData from "../../constants/colors.json";
 
 // last update date calculation function
@@ -34,7 +33,7 @@ const calculateDate = (time: string) => {
   const betweenTimeDay = Math.floor(betweenTimeMinutes / 60 / 24);
   if (betweenTimeDay < 32) return `${betweenTimeDay} day  ago`;
   //return on Day Month
-  return `on ${upDateDay + " " + Month[upDateMonth + 1]}`;
+  return `on ${upDateDay + " " + monthData[upDateMonth + 1]}`;
 };
 
 // visibility capitalization function
@@ -57,7 +56,7 @@ function Repo({ repo }: { repo: RepoType }) {
   return (
     <EachRepo>
       <FlexBox>
-        <RepoTitle href={repo.html_url} underline="hover">
+        <RepoTitle href={repo.html_url} underline="hover" target="_blank" rel="noreferrer noopener">
           {repo.name}
         </RepoTitle>
         <RepoVisibility>{capitalization(repo.visibility)}</RepoVisibility>
@@ -71,7 +70,6 @@ function Repo({ repo }: { repo: RepoType }) {
       <FlexBox>
         <RepoLanguageColor languagecolor={languageColor} />
         <RepoOption>{repo.language}</RepoOption>
-
         <RepoOption>
           <StarBorderIcon />
           {repo.stargazers_count.toLocaleString()}

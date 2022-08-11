@@ -28,41 +28,43 @@ function Repositories() {
   const searchWord = useRecoilValue(searchWordState);
   const notIsLanguage = !language || language === "All";
 
-  const getAllRepos = () => {
-    fetch(`https://api.github.com/orgs/facebook/repos?sort=${sort}&per_page=10&page=${repoPage}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error();
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setRepos(data);
-      });
+  const getAllRepos = async () => {
+    try {
+      const response = await fetch(
+        `https://api.github.com/orgs/facebook/repos?sort=${sort}&per_page=10&page=${repoPage}`
+      );
+      if (!response.ok) {
+        throw new Error();
+      }
+      const data = await response.json();
+      setRepos(data);
+    } catch {
+      setError(true);
+    }
   };
 
-  const getFilterRepos = () => {
-    fetch(`https://api.github.com/orgs/facebook/repos?sort=${sort}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error();
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setRepos(data);
-        if (language && language !== "All") {
-          const filterResult = data.filter((repo: RepoType) => repo.language === language);
-          setRepos(filterResult);
-        }
-        if (searchWord !== "") {
-          setRepos((prev) =>
-            prev.filter((repo: RepoType) =>
-              repo.name.toLowerCase().includes(searchWord.toLowerCase())
-            )
-          );
-        }
-      });
+  const getFilterRepos = async () => {
+    try {
+      const response = await fetch(`https://api.github.com/orgs/facebook/repos?sort=${sort}`);
+      if (!response.ok) {
+        throw new Error();
+      }
+      const data = await response.json();
+      setRepos(data);
+      if (language && language !== "All") {
+        const filterResult = data.filter((repo: RepoType) => repo.language === language);
+        setRepos(filterResult);
+      }
+      if (searchWord !== "") {
+        setRepos((prev) =>
+          prev.filter((repo: RepoType) =>
+            repo.name.toLowerCase().includes(searchWord.toLowerCase())
+          )
+        );
+      }
+    } catch {
+      setError(true);
+    }
   };
 
   const getRepos = useCallback(() => {

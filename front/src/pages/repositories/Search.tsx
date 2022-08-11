@@ -17,29 +17,25 @@ function Search() {
     setSearchWord(e.target.value);
   };
 
-  const getRepos = (codeLanguage: string) => {
+  const getRepos = async (codeLanguage: string) => {
     try {
-      fetch(`https://api.github.com/orgs/facebook/repos?sort=${sort}`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error();
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setRepos(data);
-          if (codeLanguage && codeLanguage !== "All") {
-            const filterResult = data.filter((repo: RepoType) => repo.language === codeLanguage);
-            setRepos(filterResult);
-          }
-          if (searchWord !== "") {
-            setRepos((prev) =>
-              prev.filter((repo: RepoType) =>
-                repo.name.toLowerCase().includes(searchWord.toLowerCase())
-              )
-            );
-          }
-        });
+      const response = await fetch(`https://api.github.com/orgs/facebook/repos?sort=${sort}`);
+      if (!response.ok) {
+        throw new Error();
+      }
+      const data = await response.json();
+      setRepos(data);
+      if (codeLanguage && codeLanguage !== "All") {
+        const filterResult = data.filter((repo: RepoType) => repo.language === codeLanguage);
+        setRepos(filterResult);
+      }
+      if (searchWord !== "") {
+        setRepos((prev) =>
+          prev.filter((repo: RepoType) =>
+            repo.name.toLowerCase().includes(searchWord.toLowerCase())
+          )
+        );
+      }
     } catch (error: any) {
       setError(true);
     }

@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 
-export const Content = styled("div")(() => ({
+export const Content = styled("section")(() => ({
   margin: "1.2rem",
 }));
 
