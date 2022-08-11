@@ -53,15 +53,15 @@ export const SearchInput = styled("input")(() => ({
   margin: 0,
 }));
 
-export const EachRepo = styled("div")(() => ({
+export const EachRepo = styled("li")(() => ({
   margin: "1.2rem 0.5rem",
 }));
 
-export const RepoLanguageColor = styled("span")(({ languageColor }: { languageColor: string }) => ({
+export const RepoLanguageColor = styled("span")(({ languagecolor }: { languagecolor: string }) => ({
   width: 10,
   height: 10,
   borderRadius: "100%",
-  backgroundColor: languageColor,
+  backgroundColor: languagecolor,
   marginRight: 5,
 }));
 
